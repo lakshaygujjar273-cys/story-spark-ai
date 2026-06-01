@@ -178,6 +178,8 @@ import { getUserInfo } from "../../services/auth.service";
 import ErrorBoundary from "../ErrorBoundary";
 import ImageFallback from "../ImageFallback";
 import { useGetProfileInfoQuery } from "../../redux/apis/user.api";
+import LoadingAnimation from "../loading/loading.component";
+
 const DashboardLayout: React.FC = () => {
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
   const [expanded, setExpanded] = useState<{ [key: string]: boolean }>({});
@@ -189,9 +191,8 @@ const DashboardLayout: React.FC = () => {
   if (!user) {
     return <Navigate to="/login" replace />;
   }
-  return <Navigate to="/login" replace />;
-}
-const { data } = useGetProfileInfoQuery();
+
+  const { data } = useGetProfileInfoQuery();
   const currentPage = menuItems
     .flatMap((item) => (item.subRoutes ? [item, ...item.subRoutes] : [item]))
     .find(
@@ -332,7 +333,9 @@ const { data } = useGetProfileInfoQuery();
         {/* Main Content wrapped with ErrorBoundary */}
         <main className="flex-1 overflow-auto p-6 bg-white text-slate-900 dark:bg-[#070c18] dark:text-white">
           <ErrorBoundary>
-            <Outlet />
+            <React.Suspense fallback={<LoadingAnimation />}>
+              <Outlet />
+            </React.Suspense>
           </ErrorBoundary>
         </main>
       </div>
