@@ -11,6 +11,7 @@ import StartWritingComponent from "./start_writing/start_writing.component";
 import Contactus from "../contactus/contactus";
 import PersonalizedRecommendationsComponent from "./personalized_recommendations/personalized_recommendations.component";
 import { isLoggedIn } from "../../services/auth.service";
+import ScrollToTopButton from "../ScrollToTopButton";
 
 const HomeComponent = () => {
   const isLogin = isLoggedIn();
@@ -41,7 +42,7 @@ const HomeComponent = () => {
       <PricingComponent />
       <StartWritingComponent />
       <Contactus />
-      <BackToTop />
+      <ScrollToTopButton />
     </>
   );
 };
